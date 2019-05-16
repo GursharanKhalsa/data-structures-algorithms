@@ -1,3 +1,5 @@
+package com.graph.linklist.impl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,16 +8,27 @@ import java.util.Map;
 
 public class GraphLLRImpl {
 	
-	public static void main(String... args) {
+	public static void main(String[] args) {
 		GraphLL graph = new GraphLL(Arrays.asList("A" , "B" , "C" , "D" , "E" , "F" , "G" , "H" , "I" ));
+//		graph.addEdge("A", "B");
+//		graph.addEdge("A", "C");
+//		graph.addEdge("B", "D");
+//		graph.addEdge("B", "E");
+//		graph.addEdge("C", "F");
+//		graph.addEdge("C", "G");
+//		graph.addEdge("D", "H");
+//		graph.addEdge("D", "I");
+		
 		graph.addEdge("A", "B");
 		graph.addEdge("A", "C");
+		graph.addEdge("B", "D");
 		graph.addEdge("B", "E");
-		graph.addEdge("B", "F");
-		graph.addEdge("C", "G");
-		graph.addEdge("C", "H");
-		graph.addEdge("H", "I");
-		
+		graph.addEdge("D", "I");
+		graph.addEdge("E", "H");
+		graph.addEdge("C", "F");
+		graph.addEdge("F", "I");
+		graph.addEdge("C", "G");		
+		graph.addEdge("G", "H");
 		graph.printGraph();
 	}
 }
@@ -29,6 +42,7 @@ class GraphLL {
 		int v = 0;
 		for(String name : vertexs) {
 			Vertex c = new Vertex( v , name);
+			this.vertexAdjList.add(c);
 			this.idsMap.put(name, v);
 			v++;
 		}
@@ -77,6 +91,8 @@ class GraphLL {
 	} 
 	
 	void printAdjArray(Connection head) {
+		if(head==null)
+			return;
 		System.out.print(" -> "+this.vertexAdjList.get(head.vertexId).name);
 		if(head.next == null)
 			return;
