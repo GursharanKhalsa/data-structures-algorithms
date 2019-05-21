@@ -128,13 +128,3 @@ public class FindEditDistence {
 //	
 //	return min(x, y, z) + 1;
 //}
-
-//
-//
-//if (a.charAt(al - 1) == b.charAt(bl - 1))
-////    return minEditDistance(a, b, al - 1, bl - 1);
-//
-// return  min(minEditDistance(a, b, al, bl - 1), minEditDistance(a, b, al - 1, bl),
-//		 minEditDistance(a, b, al - 1, bl - 1));
-//
-//return minEditDistance(a, b, al - 1, bl - 1);
