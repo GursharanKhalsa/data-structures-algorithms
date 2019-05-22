@@ -35,7 +35,7 @@ public class GraphLLRowGenericImpl {
 		System.out.println("Following is Breadth First Traversal " + "(starting from vertex " + 0 + " )");
 		graph.bfs(0);
 		
-		System.out.println("Following is Depth First Traversal");
+		System.out.println("\nFollowing is Depth First Traversal");
 		graph.DFS();
 	}
 }
@@ -132,15 +132,18 @@ class GraphLLRG<T> {
 		while (next != null) {
 			if (!visited[next.vertexId]) {
 				DFSUtil(next.vertexId, visited);	
+			} else {
+				next = next.next;
 			}
 		}
 	}
 
 	void DFS() { 
 		boolean visited[] = new boolean[V];
-		for(Integer i : this.idsMap.values())
-			if (visited[i] == false)
-				DFSUtil(i, visited);
+//		for(Integer i : this.idsMap.values()) {
+//			if (visited[i] == false)
+				DFSUtil(0, visited);
+//		}
 	}
 }
 

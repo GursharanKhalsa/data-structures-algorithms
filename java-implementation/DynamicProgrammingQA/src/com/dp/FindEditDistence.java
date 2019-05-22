@@ -7,8 +7,7 @@ public class FindEditDistence {
 //		System.out.println("Minimun Edit distence of SATURDAY and SUNDAY is="+minEditDistance("SATURDAY","SUNDAY"));
 //		
 		System.out.println("Minimun Edit distence of CAT and CAR is=" + minEditDistanceMemo("CAT", "CAR"));
-		System.out.println(
-				"Minimun Edit distence of SATURDAY and SUNDAY is=" + minEditDistanceMemo("SATURDAY", "SUNDAY"));
+		System.out.println("Minimun Edit distence of SATURDAY and SUNDAY is=" + minEditDistanceTab("SATURDAY", "SUNDAY"));
 	}
 
 	public static int min(int x, int y, int z) {
@@ -19,11 +18,10 @@ public class FindEditDistence {
 		else
 			return z;
 	}
-
+	// Recursive Solution : 3 squre n
 	public static int minEditDistance(String a, String b) {
 		return minEditDistance(a, b, a.length(), b.length());
 	}
-
 	public static int minEditDistance(String a, String b, int al, int bl) {
 		if (a == null && b == null) {
 			return 0;
@@ -43,7 +41,7 @@ public class FindEditDistence {
 		return min(x, y, z) + 1;
 	}
 
-	// Memoization Solution
+	// Memoization Solution O(m*n)
 	public static int minEditDistanceMemo(String a, String b) {
 		int cache[][] = new int[a.length()][b.length()];
 		for (int i = 0; i < a.length(); i++) {
@@ -76,43 +74,41 @@ public class FindEditDistence {
 
 		return cache[al - 1][bl - 1] = min(x, y, z) + 1;
 	}
-
+	
+	// Bottom UP approach :  O(m*n)
 	public static int minEditDistanceTab(String a, String b) {
 
-		int al = a.length(), bl = b.length();
-
-		if (a == null && b == null) {
+		if (a == null && b == null)
 			return 0;
-		}
 
+		int al = a.length(), bl = b.length();
+		
 		if (al == 0)
 			return bl;
 		if (bl == 0)
 			return al;
 
-		int cache[][] = new int[al][bl];
-
-		for (int i = 0; i < a.length(); i++) {
-			for (int j = 0; j < b.length(); j++) {
-				cache[i][j] = -1;
+		int cache[][] = new int[al+1][bl+1];
+		
+		for (int i = 0; i <= a.length(); i++) {
+			for (int j = 0; j <= b.length(); j++) {
+				 if (i==0) 
+	                 cache[i][j] = j;
+				 else if (j==0)
+	                 cache[i][j] = i;
+				 else if (a.charAt(i-1) == b.charAt(j-1)) 
+					 cache[i][j] = cache[i-1][j-1];
+				 else
+	                 cache[i][j] = 1 + min(
+	                		 cache[i][j-1],    // Insert 
+	                		 cache[i-1][j],    // Remove 
+	                		 cache[i-1][j-1]); // Replace		 
+				
 			}
 		}
-
-		if (cache[al - 1][bl - 1] != -1)
-			return cache[al - 1][bl - 1];
-
-		if (a.charAt(al - 1) == b.charAt(bl - 1))
-			return cache[al - 1][bl - 1] = minEditDistance(a, b, al - 1, bl - 1);
-
-		int x = minEditDistance(a, b, al, bl - 1); // INSERT
-		int y = minEditDistance(a, b, al - 1, bl); // UPDATE
-		int z = minEditDistance(a, b, al - 1, bl - 1); // DELETE
-
-		return cache[al - 1][bl - 1] = min(x, y, z) + 1;
+		return cache[al][bl];
 	}
 }
-
-
 //int minEditDist(char* s1, char* s2)
 //{
 //	if(s1 == NULL && s2 == NULL){ return 0; }
